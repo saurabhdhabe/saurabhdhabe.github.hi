@@ -1,0 +1,59 @@
+Question 3)
+I. Employee(EmpNo(PK), Ename, Job, MGR, Hiredate, Salary, DeptNo)                                                                                                                                                                                                                         II. Department(DeptNo(PK), Dname, Location)                                                                                  
+Write a query that shows department name and total number of employees in each department with the format as DEPTPARTMENT NAME:NUMBER OF EMPLOYEE
+Answer :
+
+mysql> desc Employee;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| EmpNo    | int(100)     | NO   | PRI | NULL    |       |
+| Ename    | varchar(100) | YES  |     | NULL    |       |
+| Job      | varchar(100) | YES  |     | NULL    |       |
+| MGR      | varchar(100) | YES  |     | NULL    |       |
+| Hiredate | varchar(100) | YES  |     | NULL    |       |
+| Salary   | varchar(100) | YES  |     | NULL    |       |
+| DeptNo   | int(100)     | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> desc Department;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| DeptNo   | int(100)     | NO   | PRI | NULL    |       |
+| Dname    | varchar(100) | YES  |     | NULL    |       |
+| Location | varchar(100) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> select * from Employee;
++-------+---------+------------+--------------+----------+---------+--------+
+| EmpNo | Ename   | Job        | MGR          | Hiredate | Salary  | DeptNo |
+| EmpNo | Ename   | Job        | MGR  		  | Hiredate | Salary  | DeptNo |
++-------+---------+------------+--------------+----------+---------+--------+
+|     1 | Adam    | IT         | Development  | 23/07/12 | 61000   |     1  |
+|     2 | Jack    | Testing    | Development  | 24/07/12 | 50000   |     2  |
+|     3 | Sam     | Networking | Development  | 25/07/12 | 60000   |     3  |
++-------+---------+------------+--------------+----------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Department;
++--------+-------+----------+
+| DeptNo | Dname | Location |
++--------+-------+----------+
+|     22 | comp  | pune     |
+|     23 | entc  | pune     |
+|     24 | civil | pune     |
++--------+-------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select Department.Dname as 'DEPARTMENT NAME', count(*) as 'NUMBER OF EMPLOYEE' from Employee inner join Department on Employee.DeptNo=Department.DeptNo group by Department.Dname;
++-----------------+--------------------+
+| DEPARTMENT NAME | NUMBER OF EMPLOYEE |
++-----------------+--------------------+
+| Developmen      |                  1 |
+| Testing         |                  2 |
+| Networking      |                  3 |
++-----------------+--------------------+
+3 rows in set (0.00 sec)
